@@ -12,7 +12,6 @@ module.exports = {
 
 
     update: (books) => {
-        console.log(books)
         for (book of books) {
             if (book._id) {
                 Book
@@ -21,9 +20,7 @@ module.exports = {
                     .catch(err => console.error(err))
             } else {
                 Book.create(book)
-                    .then(resBook => {
-                        console.log(resBook)
-                    })
+                    .then(resBook => console.log(resBook))
                     .catch(err => console.error(err))
             }
         }
