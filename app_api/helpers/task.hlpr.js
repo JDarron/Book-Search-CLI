@@ -128,8 +128,6 @@ module.exports = {
             }).then(answers => {
                 const index = parseInt(answers.book.slice(answers.book.indexOf('[') + 1, answers.book.indexOf(']'))) - 1
 
-                console.log(index)
-
                 inquirer.prompt([{
                     type: 'input',
                     name: 'title',
