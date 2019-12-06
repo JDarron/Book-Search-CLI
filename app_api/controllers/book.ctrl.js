@@ -1,31 +1,30 @@
 const Book = require('../models/Book.model')
 
 module.exports = {
-    read: () => {
-        return Book.find({}, [], {sort: {id: 1}})
-    },
-
-
     create: (book) => {
         return Book.create(book)
     },
 
 
-    update: (books) => {
+    read: () => {
+        return Book.find({}, [], {sort: {id: 1}})
+    },
+
+
+    update: async (books) => {
         for (book of books) {
             if (book._id) {
-                Book
+                await Book
                     .updateOne({ _id: book._id }, book)
-                    .then(resBook => console.log(resBook))
                     .catch(err => console.error(err))
             } else {
-                Book.create(book)
-                    .then(resBook => console.log(resBook))
+                await Book.create(book)
                     .catch(err => console.error(err))
             }
         }
 
-        console.log("Items saved successfully")
+        console.log("\nThank you. Goodbye.")
+        process.exit()
     },
 
 
