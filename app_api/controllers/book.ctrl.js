@@ -23,7 +23,7 @@ module.exports = {
             }
         }
 
-        console.log("\nThank you. Goodbye.")
+        console.log('\nThank you. Goodbye.')
         process.exit()
     },
 
@@ -31,7 +31,7 @@ module.exports = {
     delete: (id) => {
         Book
             .deleteOne({ _id: id })
-            .then(resBook => console.log({ message: "Deletion successfull." }))
+            .then(resBook => console.log({ message: 'Deletion successfull.' }))
             .catch(err => console.error(err))
     },
 }

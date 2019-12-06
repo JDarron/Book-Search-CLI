@@ -1,11 +1,11 @@
 const inquirer = require('inquirer')
-const fs = require('fs');
+const fs = require('fs')
 
 const ctrl = require('../controllers/book.ctrl')
 
 
 function overwriteDisk(data) {
-    fs.writeFile("files/books", JSON.stringify(data), function (err) {
+    fs.writeFile('files/books', JSON.stringify(data), function (err) {
         if (err) return console.log(err)
     })
 }
@@ -29,12 +29,12 @@ module.exports = {
 
     view: (callback) => {
         fs.readFile('files/books', 'utf8', function (err, data) {
-            if (err) throw err;
+            if (err) throw err
 
-            let booksList = JSON.parse(data);
+            let booksList = JSON.parse(data)
 
             if (!booksList.length) {
-                console.log("No books to view. Try adding one")
+                console.log('No books to view. Try adding one')
                 return callback()
             }
 
@@ -45,12 +45,12 @@ module.exports = {
             }
 
             inquirer.prompt({
-                type: "list",
-                name: "book",
+                type: 'list',
+                name: 'book',
                 choices: choices,
-                message: "\n\n==== View Books ===="
+                message: '\n\n==== View Books ===='
             }).then(answers => {
-                const index = parseInt(answers.book.slice(answers.book.indexOf("[") + 1, answers.book.indexOf("]"))) - 1
+                const index = parseInt(answers.book.slice(answers.book.indexOf('[') + 1, answers.book.indexOf(']'))) - 1
                 console.log(booksList[index])
                 callback()
             })
@@ -59,24 +59,24 @@ module.exports = {
 
 
     add: (callback) => {
-        console.log("\n\n==== Add a Book ====")
-        console.log("\nPlease enter the following information:")
+        console.log('\n\n==== Add a Book ====')
+        console.log('\nPlease enter the following information:')
         inquirer
             .prompt([
                 {
-                    type: "input",
-                    name: "title",
-                    message: "Title: "
+                    type: 'input',
+                    name: 'title',
+                    message: 'Title: '
                 },
                 {
-                    type: "input",
-                    name: "author",
-                    message: "Author: "
+                    type: 'input',
+                    name: 'author',
+                    message: 'Author: '
                 },
                 {
-                    type: "input",
-                    name: "description",
-                    message: "Description: "
+                    type: 'input',
+                    name: 'description',
+                    message: 'Description: '
                 }
             ])
             .then(answers => {
@@ -84,9 +84,9 @@ module.exports = {
                 let booksList
 
                 fs.readFile('files/books', 'utf8', function (err, data) {
-                    if (err) throw err;
+                    if (err) throw err
 
-                    booksList = JSON.parse(data);
+                    booksList = JSON.parse(data)
 
                     if (!booksList.length) {
                         answers.id = 1
@@ -98,19 +98,19 @@ module.exports = {
                     overwriteDisk(booksList)
 
                     callback()
-                });
+                })
             })
     },
 
 
     edit: (callback) => {
         fs.readFile('files/books', 'utf8', function (err, data) {
-            if (err) throw err;
+            if (err) throw err
 
-            let booksList = JSON.parse(data);
+            let booksList = JSON.parse(data)
 
             if (!booksList.length) {
-                console.log("No books to view. Try adding one")
+                console.log('No books to view. Try adding one')
                 return callback()
             }
 
@@ -121,28 +121,28 @@ module.exports = {
             }
 
             inquirer.prompt({
-                type: "list",
-                name: "book",
+                type: 'list',
+                name: 'book',
                 choices: choices,
-                message: "\n\n==== Edit a Book ===="
+                message: '\n\n==== Edit a Book ===='
             }).then(answers => {
-                const index = parseInt(answers.book.slice(answers.book.indexOf("[") + 1, answers.book.indexOf("]"))) - 1
+                const index = parseInt(answers.book.slice(answers.book.indexOf('[') + 1, answers.book.indexOf(']'))) - 1
 
                 console.log(index)
 
                 inquirer.prompt([{
-                    type: "input",
-                    name: "title",
+                    type: 'input',
+                    name: 'title',
                     message: `Title [${booksList[index].title}]: `
                 },
                 {
-                    type: "input",
-                    name: "author",
+                    type: 'input',
+                    name: 'author',
                     message: `Author [${booksList[index].author}]: `
                 },
                 {
-                    type: "input",
-                    name: "description",
+                    type: 'input',
+                    name: 'description',
                     message: `Description [${booksList[index].description}]: `
                 }]).then(ans => {
                     if (ans.title) {
@@ -167,14 +167,14 @@ module.exports = {
 
     search: (callback) => {
         fs.readFile('files/books', 'utf8', function (err, data) {
-            if (err) throw err;
+            if (err) throw err
 
-            let booksList = JSON.parse(data);
+            let booksList = JSON.parse(data)
 
             inquirer.prompt({
-                type: "input",
-                name: "query",
-                message: "\n\n==== Search ===="
+                type: 'input',
+                name: 'query',
+                message: '\n\n==== Search ===='
             }).then(answers => {
                 const choices = []
 
@@ -185,10 +185,10 @@ module.exports = {
                 }
 
                 inquirer.prompt({
-                    type: "list",
-                    name: "book",
+                    type: 'list',
+                    name: 'book',
                     choices: choices,
-                    message: "\n\nThe following books matched your query. Enter the book ID to see more details, or <Enter> to return."
+                    message: '\n\nThe following books matched your query. Enter the book ID to see more details, or <Enter> to return.'
                 }).then(answers => {
                     const index = parseInt(answers.book.charAt(1)) - 1
 
@@ -202,11 +202,11 @@ module.exports = {
 
     save: () => {
         fs.readFile('files/books', 'utf8', function (err, data) {
-            if (err) throw err;
+            if (err) throw err
 
-            booksList = JSON.parse(data);
+            booksList = JSON.parse(data)
 
             ctrl.update(booksList)
-        });
+        })
     }
 }

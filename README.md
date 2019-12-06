@@ -10,5 +10,5 @@ Start CLI:
 
 
 installation requirements:
-    - MonogDB
-    - Node
+- MonogDB
+- Node
